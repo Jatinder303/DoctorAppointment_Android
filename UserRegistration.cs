@@ -19,7 +19,7 @@ public class UserRegistration : Activity
         fullnameEditText = FindViewById<EditText>(Resource.Id.fullnameEditText);
         registerButton = FindViewById<Button>(Resource.Id.registerButton);
         loginButton = FindViewById<Button>(Resource.Id.LoginButton);
-
+        repository = new AppointmentsRepository();
         loginButton.Click += LoginButton_Click;
         registerButton.Click += RegisterButton_Click;
     }

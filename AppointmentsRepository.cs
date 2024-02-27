@@ -15,15 +15,12 @@ namespace DoctorAppointment_Android
         public AppointmentsRepository()
         {
             string directoryPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
-            if (Directory.Exists(directoryPath))
+            if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            string dbPath = Path.Combine(directoryPath, "DoctorAppointmentsDb.db");
-            _dbContext = new SQLiteConnection(dbPath);
-            _dbContext.CreateTable<User>();
-            _dbContext.CreateTable<Doctor>();
-            _dbContext.CreateTable<Appointment>(); 
+            string dbPath = Path.Combine(directoryPath, "Doctor_AppointmentsDb.db");
+            _dbContext = new AppointmentsDbContext(dbPath);
         }
 
         public void AddUser(User user)
@@ -31,9 +28,14 @@ namespace DoctorAppointment_Android
             _dbContext.Insert(user);
         }
 
+        public void AddDoctor(Doctor doctor)
+        {
+            _dbContext.Insert(doctor);
+        }
+
         public User GetUserByUsername(string username)
         {
-            return _dbContext.Table<User>().FirstOrDefault(u => u.Patient_Username == username);
+            return _dbContext.Table<User>().FirstOrDefault(d => d.Patient_Username == username);
         }
 
         public List<User> GetUsers()
@@ -46,15 +48,12 @@ namespace DoctorAppointment_Android
         }
 
       
-        public void DeleteUser(string username)
+        public void DeleteUser(string user_name)
         {
-            _dbContext.Delete<User>(username);
+            _dbContext.Delete<User>(user_name);
         }
 
-        public void AddDoctor(Doctor doctor)
-        {
-            _dbContext.Insert(doctor);
-        }
+
 
         public List<Doctor> GetDoctors()
         {
@@ -66,19 +65,21 @@ namespace DoctorAppointment_Android
             return _dbContext.Table<Doctor>().FirstOrDefault(d => d.Doctor_Username == username);
         }
 
+
+
         public void AddAppointment(Appointment appointment)
         {
             _dbContext.Insert(appointment);
         }
 
-        public List<Appointment> GetAppointmentsByUser(string username)
+        public List<Appointment> GetAppointmentsByUser(string Patient_username)
         {
-            return _dbContext.Table<Appointment>().Where(a => a.Patient_Username == username).ToList();
+            return _dbContext.Table<Appointment>().Where(a => a.PatientUserName == Patient_username).ToList();
         }
 
-        public List<Appointment> GetAppointmentsByDoctor(string doctor_username)
+        public List<Appointment> GetAppointmentsByDoctor(string Doctor_Username)
         {
-            return _dbContext.Table<Appointment>().Where(a => a.Doctor_Username == doctor_username).ToList();
+            return _dbContext.Table<Appointment>().Where(a => a.Doctor_UserName == Doctor_Username).ToList();
         }
 
         public void UpdateAppointment(Appointment appointment)
@@ -91,9 +92,9 @@ namespace DoctorAppointment_Android
             _dbContext.Delete(appointment);
         }
 
-        public void DeleteAppointmentByUser(string username)
+        public void DeleteAppointmentByUser(string Patient_username)
         {
-            _dbContext.Delete<Appointment>(username);
+            _dbContext.Delete<Appointment>(Patient_username);
         }
     }
 }

@@ -18,16 +18,14 @@ public class DoctorRegistrationActivity : Activity
         fullnameEditText = FindViewById<EditText>(Resource.Id.fullnameEditText);
         registerButton = FindViewById<Button>(Resource.Id.registerButton);
         loginButton = FindViewById<Button>(Resource.Id.LoginButton);
-        
+        repository = new AppointmentsRepository();
         loginButton.Click += LoginButton_Click;
         registerButton.Click += RegisterButton_Click;
     }
 
     private void RegisterButton_Click(object sender, EventArgs e)
     {
-
-
-        string username = usernameEditText.Text;
+          string username = usernameEditText.Text;
         string password = passwordEditText.Text;
         string fullname = fullnameEditText.Text;
         // Validate input
@@ -41,16 +39,16 @@ public class DoctorRegistrationActivity : Activity
         else
         {
             Doctor newDoctor = new Doctor { Doctor_Username = username, Password = password , Doctor_FullName = fullname};
-
+            Toast.MakeText(this, username, ToastLength.Short).Show();
             repository.AddDoctor(newDoctor);
 
             // Navigate to the login activity
-            StartActivity(typeof(UserLoginActivity));
+            StartActivity(typeof(DoctorLoginActivity));
         }
     }
     private void LoginButton_Click(object sender, EventArgs e)
     {
             // Navigate to the login activity
-            StartActivity(typeof(UserLoginActivity));
+            StartActivity(typeof(DoctorLoginActivity));
     }
 }

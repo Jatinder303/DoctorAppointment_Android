@@ -8,8 +8,9 @@ public class UserProfileActivity : Activity
 {
     private EditText _userName, _password, _fullname;
     private Button _updateButton, _deleteButton;
-    private string _username;
+    public string Patient_UserName;
     AppointmentsRepository _dbManager;
+    User user, update_user;
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
@@ -26,9 +27,9 @@ public class UserProfileActivity : Activity
 
 
         _dbManager = new AppointmentsRepository();
-        _username = Intent.GetStringExtra("UserName");
+        Patient_UserName = Intent.GetStringExtra("Patient_UserName");
 
-        User user =_dbManager.GetUserByUsername(_username);
+        user =_dbManager.GetUserByUsername(Patient_UserName);
         if (user != null)
         {
             _userName.Text = user.Patient_Username;
@@ -47,21 +48,22 @@ public class UserProfileActivity : Activity
 
     private void _deleteButton_Click(object? sender, EventArgs e)
     {
-        _dbManager.DeleteAppointmentByUser(_username);
-        _dbManager.DeleteUser(_username);
+        _dbManager.DeleteAppointmentByUser(user.Patient_Username);
+        _dbManager.DeleteUser(user.Patient_Username);
         StartActivity(typeof(MainActivity));
     }
 
     private void _updateButton_Click(object? sender, EventArgs e)
     {
-        User Update_user = new User()
+        update_user = new User()
         {
+            
             Patient_Username = _userName.Text,
             Password =_password.Text,
             Patient_FullName =_fullname.Text
         };
 
-        _dbManager.UpdateUser(Update_user);
+        _dbManager.UpdateUser(update_user);
         Toast.MakeText(this, "Person Data is updated successfully", ToastLength.Long).Show();
 
         Finish();

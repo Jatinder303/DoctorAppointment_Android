@@ -14,13 +14,10 @@ namespace DoctorAppointment_Android.Models
         public int AppointmentId { get; set; }
         public DateTime AppointmentDateTime { get; set; }
 
-        public string Patient_Username { get; set; }
-        public string Doctor_Username { get; set; }
+        public string Doctor_UserName { get; set; }
+        public string DoctorName { get; set; }
 
-        [ForeignKey("Patient_Username")]
-        public User User { get; set; }
-
-        [ForeignKey("Doctor_Username")]
-        public Doctor Doctor { get; set; }
+        public string PatientUserName { get; set; }
+        public string PatientName { get; set; }
     }
 }

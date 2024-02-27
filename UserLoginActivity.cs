@@ -19,7 +19,7 @@ public class UserLoginActivity : Activity
         loginButton = FindViewById<Button>(Resource.Id.loginButton);
         usernameEditText = FindViewById<EditText>(Resource.Id.usernameEditText);
         passwordEditText = FindViewById<EditText>(Resource.Id.passwordEditText);
-
+        repository = new AppointmentsRepository();
         loginButton.Click += LoginButton_Click;
     }
 
@@ -44,8 +44,8 @@ public class UserLoginActivity : Activity
                 Intent Login_intent = new Intent(this, typeof(DoctorListActivity));
 
                 // Pass the username as an extra to the intent
-                Login_intent.PutExtra("UserName", user.Patient_Username);
-
+                Login_intent.PutExtra("Patient_UserName", user.Patient_Username);
+                Login_intent.PutExtra("Patient_FullName", user.Patient_FullName);
                 // Start the ProfileActivity
                 StartActivity(Login_intent);
  

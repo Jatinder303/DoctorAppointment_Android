@@ -8,7 +8,7 @@ public class AppointmentListingActivity : Activity
     private ListView obj_listview;
     AppointmentsRepository obj_databaseManager;
     List<Appointment> appointments_details;
-    private string UserName;
+    private string Patient_UserName;
     private Button LogoutButton;
 
     protected override void OnCreate(Bundle? savedInstanceState)
@@ -23,8 +23,8 @@ public class AppointmentListingActivity : Activity
 
 
         obj_databaseManager = new AppointmentsRepository();
-        UserName = Intent.GetStringExtra("User_Name");
-
+        Patient_UserName = Intent.GetStringExtra("Patient_UserName");
+        
         DisplayAppointments();
 
         LogoutButton.Click += LogoutButton_click;
@@ -39,7 +39,7 @@ public class AppointmentListingActivity : Activity
 
     private void DisplayAppointments()
     {
-        appointments_details = obj_databaseManager.GetAppointmentsByUser(UserName);
+        appointments_details = obj_databaseManager.GetAppointmentsByUser(Patient_UserName);
 
         ArrayAdapter<string> appointments_adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1);
 
@@ -47,7 +47,7 @@ public class AppointmentListingActivity : Activity
         {
             //if(item.FullName == obj_editText.Text)
             {
-                appointments_adapter.Add($"{item.AppointmentId} - {item.AppointmentDateTime} - {item.Doctor_Username}");
+                appointments_adapter.Add($"{item.AppointmentId} - {item.AppointmentDateTime} - {item.DoctorName}");
             }
 
         }

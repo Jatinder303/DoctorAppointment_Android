@@ -10,7 +10,7 @@ public class DoctorListActivity : Activity
     AppointmentsRepository obj_databaseManager;
     Button obj_editProfileButton;
     List<Doctor> Doctordetails;
-    private string User_name;
+    private string Patient_UserName, Patient_FullName;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -24,8 +24,10 @@ public class DoctorListActivity : Activity
 
         obj_databaseManager = new AppointmentsRepository();
         DoctorListDisplay();
-        User_name = Intent.GetStringExtra("UserName");
+        Patient_UserName = Intent.GetStringExtra("Patient_UserName");
+        Patient_FullName = Intent.GetStringExtra("Patient_FullName");
         obj_editProfileButton.Click += obj_editProfileButton_Click;
+        obj_listview.ItemClick += obj_listview_item_Selected;
     }
 
     private void obj_editProfileButton_Click(object? sender, EventArgs e)
@@ -33,7 +35,7 @@ public class DoctorListActivity : Activity
         Intent profile_intent = new Intent(this, typeof(UserProfileActivity));
 
         // Pass the username as an extra to the intent
-        profile_intent.PutExtra("User_Name", User_name);
+        profile_intent.PutExtra("Patient_UserName", Patient_UserName);
 
         // Start the ProfileActivity
         StartActivity(profile_intent);
@@ -78,8 +80,10 @@ public class DoctorListActivity : Activity
     private void BookAppointment(Doctor doctor)
     {
         Intent BookAppointmentIntent = new Intent(this, typeof(AppointmentBookingActivity));
-        BookAppointmentIntent.PutExtra("Patient_UserName", User_name);
-        BookAppointmentIntent.PutExtra("Doctor_UserName", doctor.Doctor_FullName);
+        BookAppointmentIntent.PutExtra("Patient_FullName", Patient_FullName);
+        BookAppointmentIntent.PutExtra("Patient_UserName", Patient_UserName);
+        BookAppointmentIntent.PutExtra("Doctor_FullName", doctor.Doctor_FullName);
+        BookAppointmentIntent.PutExtra("Doctor_UserName", doctor.Doctor_Username);
         StartActivity(BookAppointmentIntent);
     }
 }

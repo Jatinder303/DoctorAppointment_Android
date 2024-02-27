@@ -13,5 +13,7 @@ namespace DoctorAppointment_Android.Models
         public string Doctor_Username { get; set; }
         public string Password { get; set; }
         public string Doctor_FullName { get; set; }
+
+
     }
 }

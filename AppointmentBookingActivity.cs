@@ -11,7 +11,7 @@ public class AppointmentBookingActivity : Activity
     private TimePicker timePicker;
     private Button book_Button;
     AppointmentsRepository repository;
-    private string paitent_username , doctor_username;
+    private string Patient_FullName, Doctor_FullName, Patient_UserName, Doctor_UserName;
 
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -22,8 +22,11 @@ public class AppointmentBookingActivity : Activity
         book_Button = FindViewById<Button>(Resource.Id.bookButton);
         datePicker = FindViewById<DatePicker>(Resource.Id.datePicker);
         timePicker = FindViewById<TimePicker>(Resource.Id.timePicker);
-        paitent_username = Intent.GetStringExtra("Patient_UserName");
-        doctor_username = Intent.GetStringExtra("Doctor_UserName");
+        repository = new AppointmentsRepository();
+        Doctor_FullName = Intent.GetStringExtra("Doctor_FullName");
+        Patient_FullName = Intent.GetStringExtra("Patient_FullName");
+        Patient_UserName = Intent.GetStringExtra("Patient_UserName");
+        Doctor_UserName = Intent.GetStringExtra("Doctor_UserName");
         book_Button.Click += Book_Button_Click;
     }
     private void Book_Button_Click(object sender, EventArgs e)
@@ -43,17 +46,18 @@ public class AppointmentBookingActivity : Activity
         Appointment newAppointment = new Appointment
         {
             AppointmentDateTime = selectedDateTime,
-            // Set the UserId and DoctorId based on the logged-in user and doctor
-            // These values would depend on your authentication and session management
-            Patient_Username = paitent_username, 
-            Doctor_Username = doctor_username
+            PatientUserName = Patient_UserName,
+            PatientName = Patient_FullName, 
+            Doctor_UserName = Doctor_UserName,
+            DoctorName = Doctor_FullName
+            
         };
 
         repository.AddAppointment(newAppointment);
 
         Intent AppointmentList_intent = new Intent(this, typeof(AppointmentListingActivity));
         // Pass the username as an extra to the intent
-        AppointmentList_intent.PutExtra("User_Name", paitent_username);
+        AppointmentList_intent.PutExtra("Patient_UserName", Patient_UserName);
         StartActivity(AppointmentList_intent);
 
 
