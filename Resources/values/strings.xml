@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DoctorAppointment_Android</string>
+    <string name="app_text">Patient Registration Form</string>
+	<string name="Update_text">Update or Delete Profile</string>
+	<string name="UserName_TextView">User Name</string>
+	<string name="Password_TextView">Password</string>
+	<string name="FullName_TextView">Full Name</string>
+</resources>
