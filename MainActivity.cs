@@ -22,7 +22,7 @@ namespace DoctorAppointment_Android
             {
                 // Handle patient button click, navigate to RegistrationChoiceActivity
                 StartActivity(typeof(UserRegistration));
-                bool internetConnection_check = await AppointmentsRepository.IsInternetConnectedAsync();
+                bool internetConnection_check = await _appointmentsRepository.IsInternetConnectedAsync();
 
                 if(internetConnection_check)
                 {
