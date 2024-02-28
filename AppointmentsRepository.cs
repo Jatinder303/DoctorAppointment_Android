@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace DoctorAppointment_Android
 {
     public class AppointmentsRepository
     {
         readonly SQLiteConnection _dbContext;
+        readonly AzureStorageManager _azureStorageManager;
 
         public AppointmentsRepository()
         {
@@ -21,7 +23,32 @@ namespace DoctorAppointment_Android
             }
             string dbPath = Path.Combine(directoryPath, "Doctor_AppointmentsDb.db");
             _dbContext = new AppointmentsDbContext(dbPath);
+           _azureStorageManager = new AzureStorageManager("your-storage-connection-string");
         }
+
+        public async Task<bool> IsInternetConnectedAsync()
+        {
+            var current = Connectivity.NetworkAccess;
+                    
+            return current == NetworkAccess.Internet;
+        }
+
+        public async Task<bool> TryUploadDatabaseToAzureStorageAsync()
+        {
+            if (await IsInternetConnectedAsync())
+            {
+                string localDatabaseFilePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Doctor_AppointmentsDb.db");
+                string destinationBlobName = "Doctor_AppointmentsDb.db";
+
+                _azureStorageManager.UploadDatabaseToAzureStorage(localDatabaseFilePath, destinationBlobName);
+                return true; // Successfully initiated upload
+            }
+            else
+            {
+                return false; // No internet connection
+            }
+        }
+
 
         public void AddUser(User user)
         {
