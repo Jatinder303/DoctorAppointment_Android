@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage;
+using Azure.Storage.Blobs;
 
 namespace DoctorAppointment_Android
 {
@@ -17,17 +17,15 @@ namespace DoctorAppointment_Android
             _storageConnectionString = storageConnectionString;
         }
 
-        public void UploadDatabaseToAzureStorage(string localDatabaseFilePath, string destinationBlobName)
+        public async Task UploadDatabaseToAzureStorageAsync(string localDatabaseFilePath, string destinationBlobName)
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(_storageConnectionString);
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-           CloudBlobContainer container = blobClient.GetContainerReference("your-container-name");
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(destinationBlobName);
+            var blobServiceClient = new BlobServiceClient(_storageConnectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient("your-container-name");
+            var blobClient = containerClient.GetBlobClient(destinationBlobName);
 
             using (var fileStream = File.OpenRead(localDatabaseFilePath))
             {
-                blockBlob.UploadFromStreamAsync(fileStream);
+                await blobClient.UploadAsync(fileStream, true);
             }
         }
     }

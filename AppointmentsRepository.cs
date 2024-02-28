@@ -40,7 +40,7 @@ namespace DoctorAppointment_Android
                 string localDatabaseFilePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Doctor_AppointmentsDb.db");
                 string destinationBlobName = "Doctor_AppointmentsDb.db";
 
-                _azureStorageManager.UploadDatabaseToAzureStorage(localDatabaseFilePath, destinationBlobName);
+                _azureStorageManager.UploadDatabaseToAzureStorageAsync(localDatabaseFilePath, destinationBlobName);
                 return true; // Successfully initiated upload
             }
             else
