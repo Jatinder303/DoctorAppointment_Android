@@ -22,29 +22,29 @@ namespace DoctorAppointment_Android
             {
                 // Handle patient button click, navigate to RegistrationChoiceActivity
                 StartActivity(typeof(UserRegistration));
-                bool internetConnection_check = await _appointmentsRepository.IsInternetConnectedAsync();
+                //bool internetConnection_check = await _appointmentsRepository.IsInternetConnectedAsync();
 
-                if(internetConnection_check)
-                {
-                    //  Try to upload the database to Azure Storage when patient button is clicked
-                    bool uploadInitiated = await _appointmentsRepository.TryUploadDatabaseToAzureStorageAsync();
+                //if(internetConnection_check)
+                //{
+                //    //  Try to upload the database to Azure Storage when patient button is clicked
+                //    bool uploadInitiated = await _appointmentsRepository.TryUploadDatabaseToAzureStorageAsync();
 
-                    if (uploadInitiated)
-                    {
-                        // Database upload initiated successfully
-                        Toast.MakeText(this, "Database upload initiated successfully", ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        // Handle database upload failure
-                        Toast.MakeText(this, "Database upload failed", ToastLength.Short).Show();
-                    }
-                }
-                else
-                {
-                    // No internet connection; handle accordingly
-                    Toast.MakeText(this, "No internet connection", ToastLength.Short).Show();
-                }
+                //    if (uploadInitiated)
+                //    {
+                //        // Database upload initiated successfully
+                //        Toast.MakeText(this, "Database upload initiated successfully", ToastLength.Short).Show();
+                //    }
+                //    else
+                //    {
+                //        // Handle database upload failure
+                //        Toast.MakeText(this, "Database upload failed", ToastLength.Short).Show();
+                //    }
+                //}
+                //else
+                //{
+                //    // No internet connection; handle accordingly
+                //    Toast.MakeText(this, "No internet connection", ToastLength.Short).Show();
+                //}
 
             };
 
@@ -53,29 +53,29 @@ namespace DoctorAppointment_Android
                 // Handle doctor button click, navigate to RegistrationChoiceActivity
                 StartActivity(typeof(DoctorRegistrationActivity));
 
-                bool internetConnection_check = await _appointmentsRepository.IsInternetConnectedAsync();
+                //bool internetConnection_check = await _appointmentsRepository.IsInternetConnectedAsync();
 
-                if (internetConnection_check)
-                {
-                    //Try to upload the database to Azure Storage when doctor button is clicked
-                    bool uploadInitiated = await _appointmentsRepository.TryUploadDatabaseToAzureStorageAsync();
+                //if (internetConnection_check)
+                //{
+                //    //Try to upload the database to Azure Storage when doctor button is clicked
+                //    bool uploadInitiated = await _appointmentsRepository.TryUploadDatabaseToAzureStorageAsync();
 
-                    if (uploadInitiated)
-                    {
-                        // Database upload initiated successfully
-                        Toast.MakeText(this, "Database upload initiated successfully", ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        // Handle database upload failure
-                        Toast.MakeText(this, "Database upload failed", ToastLength.Short).Show();
-                    }
-                }
-                else
-                {
-                    // No internet connection; handle accordingly
-                    Toast.MakeText(this, "No internet connection", ToastLength.Short).Show();
-                }
+                //    if (uploadInitiated)
+                //    {
+                //        // Database upload initiated successfully
+                //        Toast.MakeText(this, "Database upload initiated successfully", ToastLength.Short).Show();
+                //    }
+                //    else
+                //    {
+                //        // Handle database upload failure
+                //        Toast.MakeText(this, "Database upload failed", ToastLength.Short).Show();
+                //    }
+                //}
+                //else
+                //{
+                //    // No internet connection; handle accordingly
+                //    Toast.MakeText(this, "No internet connection", ToastLength.Short).Show();
+                //}
             };
 
         }
